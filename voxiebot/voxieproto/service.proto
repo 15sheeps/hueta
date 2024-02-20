@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package Voxel;
+
+import "requests.proto";
+import "responses.proto";
+import "notifications.proto";
+
+service Playing {
+    rpc ProcessRequest(Request) returns (Response);
+    rpc ProcessNotification(NotificationSubscribeRequest) returns (stream Notification);
+}

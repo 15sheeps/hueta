@@ -1,0 +1,38 @@
+[
+	{
+		"mapName": "map1",
+		"placementTiles":[
+			{"x": 3, "y": 8}, {"x": 4, "y": 8}, {"x": 5, "y": 8}
+		]
+	},
+	{
+		"mapName": "map2",
+		"placementTiles":[
+			{"x": 6, "y": 11}, {"x": 7, "y": 11}, {"x": 8, "y": 11}
+		]
+	},
+	{
+		"mapName": "map3",
+		"placementTiles":[
+			{"x": 3, "y": 8}, {"x": 4, "y": 8}, {"x": 5, "y": 8}
+		]
+	},	
+	{
+		"mapName": "map4",
+		"placementTiles":[
+			{"x": 8, "y": 8}, {"x": 9, "y": 8}, {"x": 10, "y": 8}
+		]
+	},
+	{
+		"mapName": "map5",
+		"placementTiles":[
+			{"x": 3, "y": 8}, {"x": 4, "y": 8}, {"x": 5, "y": 8}
+		]
+	},
+	{
+		"mapName": "map6",
+		"placementTiles":[
+			{"x": 3, "y": 8}, {"x": 4, "y": 8}, {"x": 5, "y": 8}
+		]
+	}
+]

@@ -1,0 +1,153 @@
+syntax = "proto3";
+
+package Voxel;
+
+import "types.proto";
+
+message MoveRequest {
+    Position Target_Position = 1;
+}
+
+message SetDirectionRequest {
+    FacingDirection Direction = 1;
+}
+
+message EndTurnRequest {
+    bool ReduceTimer = 1;
+}
+
+message AttackRequest {
+    Position Target_Position = 1;
+    int32 DamageDone = 2;
+    float HitChance = 3;
+    bool HitOverride = 4;
+    bool SpellProcOverride = 5;
+    bool WeaponProcOverride = 6;
+}
+
+message UseClassSkillRequest {
+    Position Target_Position = 1;
+    string Skill_Used = 2;
+    int32 DamageDone = 3;
+    float HitChance = 4;
+    bool HitOverride = 5;
+    bool SpellProcOverride = 6;
+    bool WeaponProcOverride = 7;
+}
+
+message ChargeSkillRequest {
+    Position Target_Position = 1;
+    string Skill_Used = 2;
+    int32 TurnScore = 3;
+    bool FollowCharacter = 4;
+}
+
+message ChargeSkillCompletdRequest {
+    string Skill_Used = 2;
+}
+
+message SpecialSkillRequest {
+    int32 Special_Skill_Id = 1;
+    Position Target_Position = 2;
+    string Skill_Used = 3;
+}
+
+message DefendRequest {
+    Position Target_Position = 2;
+}
+
+message EquipRequest {
+    int32 Equip_Slot_Id = 1;
+    string Equip_Item = 2;
+}
+
+message ActionRequest {
+    oneof Data {
+        AttackRequest Attack = 10;
+        UseClassSkillRequest Use_Class_Skill = 11;
+        SpecialSkillRequest Special_Skill = 12;
+        DefendRequest Defend = 13;
+        ChargeSkillRequest ChargeSkill = 14;
+        ChargeSkillCompletdRequest ChargeSkillCompleted = 15;
+    }
+}
+
+message MakeTurnRequest {
+    int32 CharacterIndex = 1;
+    
+    oneof Data {
+        MoveRequest Move = 10;
+        ActionRequest Action = 11;
+        EquipRequest Equip = 12;
+        SetDirectionRequest SetDirection = 13;
+        EndTurnRequest EndTurn = 14;
+    }
+}
+
+message JoinGameRequest {
+    string Client_Access_Token = 1;
+    string Custom_Attribute = 2;
+}
+
+message RejoinGameRequest {
+    string Custom_Attribute = 1;
+}
+
+message MoveCursorRequest {
+    Position position = 1;
+}
+
+message PlaceCharacterRequest {
+    int32 CharacterIndex = 1;
+    Position Position = 2;
+}
+
+message RemoveCharacterRequest {
+    int32 CharacterIndex = 1;
+    Position Position = 2;
+}
+
+message ReadyToPlayRequest {
+    bool Ready = 1;
+}
+
+message LoadingProgressRequest {
+    float Loading_Progress = 1;
+}
+
+message LoadingCompleteRequest {
+    
+}
+
+message ClientPingRequest {
+    
+}
+
+message WinRequest {
+    int32 Team_Id = 1;
+    int32 RandomNumberAnswer = 2;
+    string RandomStringAnswer = 3;
+}
+
+message Request {
+    uint32 Request_Id = 1;
+    string User_Id = 2;
+    
+    oneof Data {
+        JoinGameRequest Join_Game = 80;
+        MoveCursorRequest Move_Cursor = 81;
+        RejoinGameRequest Rejoin_Game = 82;
+        PlaceCharacterRequest Place_Characters = 101;
+        RemoveCharacterRequest Remove_Character = 102;
+        ReadyToPlayRequest Ready_To_Play = 103;
+        MakeTurnRequest Make_Turn = 104;
+        ClientPingRequest Client_Ping = 105;
+        WinRequest Win = 106;
+        LoadingProgressRequest LoadingProgress = 107;
+        LoadingCompleteRequest LoadingComplete = 108;
+    }
+}
+
+message NotificationSubscribeRequest {
+    string User_Id = 1;
+}

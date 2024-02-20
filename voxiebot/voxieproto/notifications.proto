@@ -1,0 +1,165 @@
+syntax = "proto3";
+
+package Voxel;
+
+import "types.proto";
+
+message StartGameNotification {
+    
+}
+
+message InitNotification {
+    string User_Id = 1;
+    string Opponent_User_Id = 2;
+    int32 Team_Id = 3;
+    string MapName = 4;
+    int32 RandomNumberClue = 5;
+}
+
+message InitMultiplayerVoxieTeam {
+    string User_Id = 1;
+    int32 Team_Id = 2;
+    repeated Character Characters = 3;
+}
+
+message CursorPositionNotification {
+    string User_Id = 1;
+    Position Position = 2;
+}
+
+message PlacedCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    Position Position = 3;
+}
+
+message RemoveCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    Position Position = 3;
+}
+
+message ReadyToPlayNotification {
+    string User_Id = 1;
+    bool Ready = 2;
+}
+
+message LoadingProgresstNotification {
+    string User_Id = 1;
+    float Loading_Progress = 2;
+}
+
+message BattleStartedNotification {
+    
+}
+
+message MoveCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    Position TargetPosition = 3;
+}
+
+message AttackCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    Position TargetPosition = 3;
+    int32 DamageDone = 4;
+    float HitChance = 5;
+    bool HitOverride = 6;
+    bool SpellProcOverride = 7;
+    bool WeaponProcOverride = 8;
+}
+
+message SkillCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    Position TargetPosition = 3;
+    string Skill_Used = 4;
+    int32 DamageDone = 5;
+    float HitChance = 6;
+    bool HitOverride = 7;
+    bool SpellProcOverride = 8;
+    bool WeaponProcOverride = 9;
+}
+
+message ChargeSkillCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    Position TargetPosition = 3;
+    string Skill_Used = 4;
+    int32 TurnScore = 5;
+    bool FollowCharacter = 6;
+}
+
+message ChargeSkillCompletedCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    string Skill_Used = 4;
+}
+
+message EquipCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    int32 Equip_Slot_Id = 3;
+    string Equip_Item = 4;
+}
+
+message DefendCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    Position TargetPosition = 3;
+}
+
+message SetDirectionCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    FacingDirection TargetDirection = 3;
+}
+
+message EndTurnCharacterNotification {
+    string User_Id = 1;
+    int32 CharacterIndex = 2;
+    bool ReduceTimer = 3;
+}
+
+message OpponentLeftGameNotification {
+    
+}
+
+message EndMatchGameNotification {
+    string User_Id = 1;
+    float Voxel_reward = 2;
+    repeated ItemReward Item_Rewards = 3;
+    float Voxel_reward_split = 4;
+    bool nft_reward_split = 5;
+}
+
+message AfterRejoinNotification {
+    
+}
+
+message Notification {
+    oneof data {
+        StartGameNotification Start_Game = 100;
+        InitNotification Init = 101;
+        InitMultiplayerVoxieTeam MultiPlayer_Team = 102;
+        LoadingProgresstNotification Loading_Progress = 103;
+        CursorPositionNotification Cursor_Position = 110;
+        PlacedCharacterNotification Placed_Character = 120;
+        RemoveCharacterNotification Remove_Character = 121;
+        ReadyToPlayNotification Ready_To_Play = 122;
+        BattleStartedNotification Battle_Started = 123;
+        MoveCharacterNotification Move_Character = 130;
+        SetDirectionCharacterNotification SetDirection_Character = 131;
+        EndTurnCharacterNotification EndTurn_Character = 132;
+        AttackCharacterNotification Attack_Character = 133;
+        EquipCharacterNotification Equip_Character = 134;
+        DefendCharacterNotification Defend_Character = 135;
+        SkillCharacterNotification Skill_Character = 136;
+        ChargeSkillCharacterNotification Charge_Skill_Character = 137;
+        ChargeSkillCompletedCharacterNotification Charge_Skill_Completed_Character = 138;
+        OpponentLeftGameNotification Opponent_Left_Game = 160;
+        EndMatchGameNotification End_Match = 170;
+        AfterRejoinNotification After_Rejoin = 180;
+    }
+}

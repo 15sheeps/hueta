@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package Voxel;
+
+message MoveResponse {
+    
+}
+
+message AttackResponse {
+    
+}
+
+message UseClassSkillResponse {
+    
+}
+
+message ChargeSkillResponse {
+    
+}
+
+message ChargeSkillCompleteResponse {
+    
+}
+
+message SpecialSkillResponse {
+    
+}
+
+message DefendResponse {
+    
+}
+
+message EquipResponse {
+    
+}
+
+message SetDirectionResponse {
+    
+}
+
+message EndTurnResponse {
+    
+}
+
+message ActionResponse {
+    oneof Data {
+        AttackResponse Attack = 10;
+        UseClassSkillResponse Use_Class_Skill = 11;
+        SpecialSkillResponse Special_Skill = 12;
+        DefendResponse Defend = 13;
+        ChargeSkillResponse ChargeSkill = 14;
+        ChargeSkillCompleteResponse ChargeSkillComplete = 15;
+    }
+}
+
+message MakeTurnResponse {
+    oneof Data {
+        MoveResponse Move = 10;
+        ActionResponse Action = 11;
+        EquipResponse Equip = 12;
+        SetDirectionResponse SetDirection = 13;
+        EndTurnResponse EndTurn = 14;
+    }
+}
+
+message JoinGameResponse {
+    ReturnCode Return_Code = 1;
+    enum ReturnCode {
+        SUCCESS = 0;
+        ERROR_CLIENT_ACCESS_TOKEN_NOT_PROVIDED = 1;
+        ERROR_WRONG_CUSTOM_ATTRIBUTE = 2;
+        ERROR_THIS_USER_ALREADY_JOINED = 3;
+    }
+}
+
+message RejoinGameResponse {
+    ReturnCode Return_Code = 1;
+    enum ReturnCode {
+        SUCCESS = 0;
+        ERROR_WRONG_CUSTOM_ATTRIBUTE = 1;
+        ERROR_USER_NOT_FOUND = 2;
+    }
+}
+
+message MoveCursorResponse {
+    
+}
+
+message PlaceCharacterResponse {
+    
+}
+
+message RemoveCharacterResponse {
+    
+}
+
+message ReadyToPlayResponse {
+    
+}
+
+message LoadingProgressResponse {
+    
+}
+
+message LoadingCompleteResponse {
+    
+}
+
+message ClientPingResponse {
+    
+}
+
+message WinResponse {
+    
+}
+
+message Response {
+    uint32 Request_Id = 1;
+    bool Result = 2;
+    
+    oneof Data {
+        JoinGameResponse Join_Game = 80;
+        MoveCursorResponse Move_Cursor = 81;
+        RejoinGameResponse Rejoin_Game = 82;
+        PlaceCharacterResponse Place_Characters = 101;
+        RemoveCharacterResponse Remove_Character = 102;
+        ReadyToPlayResponse Ready_To_Play = 103;
+        MakeTurnResponse Make_Turn = 104;
+        ClientPingResponse Client_Ping = 105;
+        WinResponse Win = 106;
+        LoadingProgressResponse Loading_Progress = 107;
+        LoadingCompleteResponse Loading_Complete = 108;
+    }
+}

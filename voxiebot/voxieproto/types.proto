@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package Voxel;
+
+message Position {
+    int32 X = 1;
+    int32 Y = 2;
+}
+
+message FacingDirection {
+    float X = 1;
+    float Y = 2;
+    float Z = 3;
+}
+
+message ItemReward {
+    string Item_Id = 1;
+}
+
+message Character {
+    int32 VoxieIndex = 1;
+    int32 VoxieClass = 2;
+    int32 Level_Stat = 3;
+    string VoxieName = 4;
+    string Equip_Left_Weapon = 5;
+    string Equip_Right_Weapon = 6;
+    string Equip_Head = 7;
+    string Equip_Body = 8;
+    string Equip_Hands = 9;
+    string Equip_Feet = 10;
+    string Equip_Accessory = 11;
+    string Equip_Pet = 12;
+    int32 Speed_Score = 13;
+    bool Is_Recruit = 14;
+    int32 Strength = 15;
+    int32 Dexterity = 16;
+    int32 Intelligence = 17;
+    int32 Luck = 18;
+    int32 Armor = 19;
+    int32 Movement = 20;
+    bool Is_Ghost = 21;
+}
