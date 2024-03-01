@@ -64,6 +64,7 @@ func (usr *Instance) StartMatchmaking() {
 			_, message, err := c.ReadMessage()
 			if err != nil {
 				log.Println("read:", err)
+				for {}
 				return
 			}
 

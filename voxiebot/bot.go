@@ -68,7 +68,11 @@ func (usr *Instance) SkipTurn(client pb.PlayingClient) {
 		Data: &pb.Request_Make_Turn{
 			Make_Turn: &pb.MakeTurnRequest{
 				CharacterIndex: charId,
-				Data: &pb.MakeTurnRequest_EndTurn{},
+				Data: &pb.MakeTurnRequest_EndTurn{
+					EndTurn: &pb.EndTurnRequest{
+						ReduceTimer: true,
+					},
+				},
 			},
 		},
 	}
@@ -77,6 +81,22 @@ func (usr *Instance) SkipTurn(client pb.PlayingClient) {
 }
 
 func (usr *Instance) KillOpponent(client pb.PlayingClient) {
+	var oppTile Tile
+	var oppId int32
+
+	if teamId == 1 {
+		oppId = 0
+	} else {
+		oppId = 1
+	}
+
+    for _, e := range Placement {
+    	if e.MapName == mapName {
+    		oppTile = e.PlacementTiles[oppId]
+    		break
+    	}
+    }
+
 	attackRequest := &pb.Request{
 		Request_Id: id.Load(),
 		User_Id: usr.username,
@@ -87,7 +107,7 @@ func (usr *Instance) KillOpponent(client pb.PlayingClient) {
 					Action: &pb.ActionRequest{
 						Data: &pb.ActionRequest_Attack{
 							Attack: &pb.AttackRequest{
-								Target_Position: &pb.Position{X: startTile.X+1, Y: startTile.Y},
+								Target_Position: &pb.Position{X: oppTile.X, Y: oppTile.Y},
 								DamageDone: 500,
 								HitChance: 100,
 								HitOverride: true,
@@ -155,7 +175,6 @@ func (usr *Instance) StartGame(client pb.PlayingClient) {
     		break
     	}
     }
-    log.Println(startTile)
 
 	placeChar := &pb.Request{
 		Request_Id: id.Load(),
@@ -181,7 +200,7 @@ func (usr *Instance) StartGame(client pb.PlayingClient) {
 	EasyProcessRequest(client, readyRequest)
 }
 
-func (usr *Instance) Play(addr, attribute string, shouldWin bool) {
+func (usr *Instance) Play(addr, attribute string, winningMode bool) {
 	id.Store(0)
 
 	opts := []grpc.DialOption{
@@ -263,7 +282,7 @@ func (usr *Instance) Play(addr, attribute string, shouldWin bool) {
 
 		    if getMpTeamNotif := notif.GetMultiPlayer_Team(); getMpTeamNotif != nil {
 		    	if getMpTeamNotif.User_Id == usr.username{
-		    		charId = getMpTeamNotif.Characters[1].VoxieIndex
+		    		charId = getMpTeamNotif.Characters[2].VoxieIndex
 		    	}
 		    }
 
@@ -282,15 +301,16 @@ func (usr *Instance) Play(addr, attribute string, shouldWin bool) {
 		    if endTurn := notif.GetEndTurn_Character(); endTurn != nil {
 		    	if endTurn.User_Id != usr.username {
 		    		time.Sleep(10*time.Second)
-		    		if shouldWin && (time.Since(timeBattleStarted).Seconds() > 250) {
+		    		if winningMode && (time.Since(timeBattleStarted).Seconds() > 270) {
 		    			usr.KillOpponent(client)
-		    			time.Sleep(1*time.Second)
-		    			usr.SendWinRequest(client)
-		    		} else {
-		    			usr.SkipTurn(client)	
 		    		}
+		    		usr.SkipTurn(client)	
 		    	}
 		    }
+
+			if attackNotif := notif.GetAttack_Character(); attackNotif != nil {
+				usr.SendWinRequest(client)
+			}
 
 		    if err != nil {
 		        log.Fatalf("%v.ProcessNotification(_) = _, %v", client, err)
